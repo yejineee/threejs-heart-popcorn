@@ -74,3 +74,9 @@ const tick = () =>
 }
 
 tick()
+
+/**
+ * Helper
+ */
+const axesHelper = new THREE.AxesHelper( 1000 );
+scene.add( axesHelper );
