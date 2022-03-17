@@ -12,19 +12,32 @@ const canvas = document.querySelector('#webgl')
 const scene = new THREE.Scene()
 
 // Geometry
-const geometry = new THREE.TorusGeometry( .7, .2, 16, 100 );
+const heartShape = new THREE.Shape();
 
-// Materials
+heartShape.moveTo( 25, 25 );
+heartShape.bezierCurveTo( 25, 25, 20, 0, 0, 0 );
+heartShape.bezierCurveTo( - 30, 0, - 30, 35, - 30, 35 );
+heartShape.bezierCurveTo( - 30, 55, - 10, 77, 25, 95 );
+heartShape.bezierCurveTo( 60, 77, 80, 55, 80, 35 );
+heartShape.bezierCurveTo( 80, 35, 80, 0, 50, 0 );
+heartShape.bezierCurveTo( 35, 0, 25, 25, 25, 25 );
 
-const material = new THREE.MeshBasicMaterial()
-material.color = new THREE.Color(0xff0000)
+const extrudeSettings = { depth: 20, bevelEnabled: true, bevelSegments: 2, steps: 2, bevelSize: 2, bevelThickness: 0.5 };
+const geometry = new THREE.ExtrudeGeometry( heartShape, extrudeSettings );
+
+// Material
+const material = new THREE.MeshBasicMaterial({color: 0xFF1493, wireframe: true})
 
 // Mesh
-const sphere = new THREE.Mesh(geometry,material)
-scene.add(sphere)
+const heartMesh = new THREE.Mesh( geometry, material);
+heartMesh.geometry.rotateX(Math.PI)
+heartMesh.geometry.translate(-25, 100, 0)
+scene.add(heartMesh)
 
 // Lights
-// TODO : Light 추가하기
+const light = new THREE.PointLight(0xffffff, 0.2, 100);
+light.position.set(0, 0, 0);
+scene.add(light);
 
 /**
  * Sizes
@@ -40,10 +53,14 @@ const sizes = {
  * Camera
  */
 
-// TODO 카메라 추가하기
+const aspectRatio = window.innerWidth / window.innerHeight;
+const camera = new THREE.PerspectiveCamera(60, aspectRatio, 1, 2000);
+camera.position.set(0,150,200);
+camera.lookAt(new THREE.Vector3(0,0,0));  
+scene.add(camera);
 
 /**
- * Rendererㄴ
+ * Renderer
  */
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas
@@ -54,14 +71,16 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 /**
  * Animate
  */
+const clock = new THREE.Clock()
 
 const tick = () =>
 {
-    // TODO : 회전하게 만들기
-
-    // Update Orbital Controls
-    // controls.update()
-
+    // Update objects
+    const elapsedTime = clock.getElapsedTime()
+    heartMesh.rotation.x = 1.3 * elapsedTime
+    heartMesh.rotation.y = 1.5 * elapsedTime
+    heartMesh.rotation.z = 1.2 * elapsedTime
+    
     // Render
     renderer.render(scene, camera)
 
@@ -70,3 +89,9 @@ const tick = () =>
 }
 
 tick()
+
+/**
+ * Helper
+ */
+const axesHelper = new THREE.AxesHelper( 1000 );
+scene.add( axesHelper );
