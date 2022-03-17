@@ -71,11 +71,16 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 /**
  * Animate
  */
+const clock = new THREE.Clock()
 
 const tick = () =>
 {
-    // TODO : 회전하게 만들기
-
+    // Update objects
+    const elapsedTime = clock.getElapsedTime()
+    heartMesh.rotation.x = 1.3 * elapsedTime
+    heartMesh.rotation.y = 1.5 * elapsedTime
+    heartMesh.rotation.z = 1.2 * elapsedTime
+    
     // Render
     renderer.render(scene, camera)
 
