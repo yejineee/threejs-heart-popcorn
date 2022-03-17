@@ -24,7 +24,9 @@ const sphere = new THREE.Mesh(geometry,material)
 scene.add(sphere)
 
 // Lights
-// TODO : Light 추가하기
+const light = new THREE.PointLight(0xffffff, 0.2, 100);
+light.position.set(0, 0, 0);
+scene.add(light);
 
 /**
  * Sizes
