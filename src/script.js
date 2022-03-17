@@ -40,7 +40,11 @@ const sizes = {
  * Camera
  */
 
-// TODO 카메라 추가하기
+const aspectRatio = window.innerWidth / window.innerHeight;
+const camera = new THREE.PerspectiveCamera(60, aspectRatio, 1, 2000);
+camera.position.z = 5;
+camera.lookAt(new THREE.Vector3(0,0,0));  
+scene.add(camera);
 
 /**
  * Rendererㄴ
