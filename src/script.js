@@ -2,6 +2,7 @@ import './style.css'
 import * as THREE from 'three'
 import * as dat from 'dat.gui'
 import {heartMesh} from './heart';
+import {floreMesh} from './flore'
 
 // Debug
 const gui = new dat.GUI()
@@ -12,7 +13,10 @@ const canvas = document.querySelector('#webgl')
 // Scene
 const scene = new THREE.Scene()
 
+
+
 // Mesh
+scene.add(floreMesh);
 scene.add(heartMesh)
 
 // Lights
@@ -57,10 +61,10 @@ const clock = new THREE.Clock()
 const tick = () =>
 {
     // Update objects
-    // const elapsedTime = clock.getElapsedTime()
-    // heartMesh.rotation.x = 1.3 * elapsedTime
-    // heartMesh.rotation.y = 1.5 * elapsedTime
-    // heartMesh.rotation.z = 1.2 * elapsedTime
+    const elapsedTime = clock.getElapsedTime()
+    heartMesh.rotation.x = 1.3 * elapsedTime
+    heartMesh.rotation.y = 1.5 * elapsedTime
+    heartMesh.rotation.z = 1.2 * elapsedTime
     
     // Render
     renderer.render(scene, camera)
