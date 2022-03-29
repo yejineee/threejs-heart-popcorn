@@ -93,6 +93,14 @@ scene.add( axesHelper );
 
 // Debug
 const gui = new dat.GUI()
-gui.add(camera.position, 'x');
-gui.add(camera.position, 'y');
-gui.add(camera.position, 'z');
+
+const cameraGUI = gui.addFolder('Camera');
+const options = {min:-500, max: 500, step: 20};
+cameraGUI.add(camera.position, 'x', ...Object.values(options));
+cameraGUI.add(camera.position, 'y', ...Object.values(options));
+cameraGUI.add(camera.position, 'z', ...Object.values(options));
+cameraGUI.open();
+
+const heartGUI = gui.addFolder('Heart');
+heartGUI.add(heartMesh.material, 'wireframe')
+heartGUI.open();

@@ -19,7 +19,7 @@ export const heartGeometry = (function(){
 
 export const heartMesh = (function(){
   // Material
-  const material = new THREE.MeshBasicMaterial({color: 0xFF1493, wireframe: true})
+  const material = new THREE.MeshBasicMaterial({color: 0xFF1493})
 
   // Mesh
   const mesh = new THREE.Mesh( heartGeometry, material);
