@@ -104,3 +104,9 @@ cameraGUI.open();
 const heartGUI = gui.addFolder('Heart');
 heartGUI.add(heartMesh.material, 'wireframe')
 heartGUI.open();
+
+const floorGUI = gui.addFolder('Floor');
+floorGUI.add(floreMesh.rotation,'x', - 2*Math.PI, 2*Math.PI, Math.PI/2).name('rotation-x')
+floorGUI.add(floreMesh.rotation,'y', - 2*Math.PI, 2*Math.PI, Math.PI/2).name('rotation-y')
+floorGUI.add(floreMesh.rotation,'z', - 2*Math.PI, 2*Math.PI, Math.PI/4).name('rotation-z')
+floorGUI.open()
