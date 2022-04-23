@@ -3,9 +3,7 @@ import * as THREE from 'three'
 import * as dat from 'dat.gui'
 import {heartMesh} from './heart';
 import {floreMesh} from './flore'
-
-// Debug
-const gui = new dat.GUI()
+import {OrbitControls} from './example/jsm/controls/OrbitControls'
 
 // Canvas
 const canvas = document.querySelector('#webgl')
@@ -44,6 +42,12 @@ camera.position.set(0,150,200);
 camera.lookAt(new THREE.Vector3(0,0,0));  
 scene.add(camera);
 
+const controls = new OrbitControls(camera, canvas);
+controls.update();
+
+
+
+
 /**
  * Renderer
  */
@@ -60,6 +64,8 @@ const clock = new THREE.Clock()
 
 const tick = () =>
 {
+    controls.update();
+
     // Update objects
     const elapsedTime = clock.getElapsedTime()
     heartMesh.rotation.x = 1.3 * elapsedTime
@@ -80,3 +86,27 @@ tick()
  */
 const axesHelper = new THREE.AxesHelper( 1000 );
 scene.add( axesHelper );
+
+/**
+ * gui
+ */
+
+// Debug
+const gui = new dat.GUI()
+
+const cameraGUI = gui.addFolder('Camera');
+const options = {min:-500, max: 500, step: 20};
+cameraGUI.add(camera.position, 'x', ...Object.values(options));
+cameraGUI.add(camera.position, 'y', ...Object.values(options));
+cameraGUI.add(camera.position, 'z', ...Object.values(options));
+cameraGUI.open();
+
+const heartGUI = gui.addFolder('Heart');
+heartGUI.add(heartMesh.material, 'wireframe')
+heartGUI.open();
+
+const floorGUI = gui.addFolder('Floor');
+floorGUI.add(floreMesh.rotation,'x', - 2*Math.PI, 2*Math.PI, Math.PI/2).name('rotation-x')
+floorGUI.add(floreMesh.rotation,'y', - 2*Math.PI, 2*Math.PI, Math.PI/2).name('rotation-y')
+floorGUI.add(floreMesh.rotation,'z', - 2*Math.PI, 2*Math.PI, Math.PI/4).name('rotation-z')
+floorGUI.open()
